@@ -18,7 +18,7 @@ class Ssh
 	public function __construct($config) 
 	{
 
-		if (!function_exists('ssh2_connect')) {
+				if (!function_exists('ssh2_connect')) {
             throw new Exception('<p class="lead text-danger text-center">FATAL: ssh2_connect function doesn\'t exist!</p>');
         }
         if(!$this->isServerRunning($config['ip'],$config['port'])) {   
@@ -27,9 +27,9 @@ class Ssh
         //init
         if(is_array($config)) {
         	$this->_ip = $config['ip'];
-			$this->_username = $config['username'];
-			$this->_password = $config['password'];
-			$this->_port = $config['port'];
+					$this->_username = $config['username'];
+					$this->_password = $config['password'];
+					$this->_port = $config['port'];
         } else {
         	 throw new Exception('<p class="lead text-danger text-center">Invalid Argument</p>');
         }
@@ -40,8 +40,9 @@ class Ssh
 	{
 		$this->_connection = ssh2_connect($this->_ip, $this->_port);
 		if(!$this->_connection)
-
+		{
 			throw new Exception('<p class="lead text-danger text-center">Cannot connect to server</p>');
+		}
 		else 
 		{
 			if(!@ssh2_auth_password($this->_connection, $this->_username, $this->_password))
@@ -102,7 +103,7 @@ class Ssh
 		{
 	        $sftp = ssh2_ftp($this->_connection);
 	        $function = 'ssh2_sftp_' . $cmd;
-	    	switch ($function) {
+	    		switch ($function) {
 	    		case 'ssh2_sftp_unlink':
 	    			//Deletes a file on the remote filesystem.
 	    			return ssh2_sftp_unlink($sftp, $parameter['path']) ? array('status' => TRUE, 'msg' => 'File Deleted') : array('status' => FALSE, 'msg' => 'File Not Deleted') ;
@@ -155,7 +156,7 @@ class Ssh
 		{
 			return array('status' => FALSE, 'msg' => 'NOT CONNECTED TRY CONNECT!');
 		}
-    }
+  }
 	public function disconnect() 
 	{
 		if($this->_connected) {
@@ -164,7 +165,7 @@ class Ssh
 		}
 	}
 	private function isServerRunning($ip,$port) 
-    { 
+  { 
         $running = false;
         $fp = @fsockopen($ip,$port,$errCode,$errStr,5);
         if($fp)
@@ -173,10 +174,13 @@ class Ssh
             fclose($fp);
         }
         return $running;
-    }
-    public function __destruct() 
+  }
+  public function __destruct() 
 	{
 		$this->disconnect();
 	}
-
+	
 }
+
+/* End of file Ssh.php */
+/* Location: ./application/libraries/Ssh.php */
