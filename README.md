@@ -1,2 +1,3 @@
-# ssh2
-ssh library for php
+# ssh2 library for codeigniter 
+
+sorry no docs :'(
